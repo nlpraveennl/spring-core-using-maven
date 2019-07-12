@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="com.pvn.di.setterbased" />
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	
+	<bean id="center" class="com.pvn.di.setterbased.Point" scope="prototype" >
+		<qualifier value="centerQualifier"/>
+		<property name="pointX" value="0"/>
+		<property name="pointY" value="0"/>
+	</bean>
+	
+	<bean id="pointA" class="com.pvn.di.setterbased.Point" scope="prototype">
+		<property name="pointX" value="${pointA.X}"/>
+		<property name="pointY" value="${pointA.Y}"/>
+	</bean>
+	
+	<bean id="pointB" class="com.pvn.di.setterbased.Point" scope="prototype">
+		<property name="pointX" value="${pointB.X}"/>
+		<property name="pointY" value="${pointB.Y}"/>
+	</bean>
+	
+	<bean id="pointC" class="com.pvn.di.setterbased.Point" scope="prototype">
+		<property name="pointX" value="${pointC.X}"/>
+		<property name="pointY" value="${pointC.Y}"/>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="shapevalue.properties" />
+	</bean>
+	
+</beans>

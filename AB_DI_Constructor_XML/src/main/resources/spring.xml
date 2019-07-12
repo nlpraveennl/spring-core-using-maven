@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<bean id="pointA" class="com.pvn.di.constructorbased.Point" scope="prototype">
+		<constructor-arg name="pointX" value="${pointA.X}"/>
+		<constructor-arg name="pointY" value="${pointA.Y}"/>
+	</bean>
+	
+	<bean id="pointB" class="com.pvn.di.constructorbased.Point" scope="prototype">
+		<constructor-arg name="pointX" value="${pointB.X}"/>
+		<constructor-arg name="pointY" value="${pointB.Y}"/>
+	</bean>
+	
+	<bean id="pointC" class="com.pvn.di.constructorbased.Point" scope="prototype">
+		<constructor-arg name="pointX" value="${pointC.X}"/>
+		<constructor-arg name="pointY" value="${pointC.Y}"/>
+	</bean>
+	
+	<bean id="triangle" class="com.pvn.di.constructorbased.Triangle" scope="prototype">
+		<constructor-arg name="pointA" ref="pointA"/>
+		<constructor-arg name="pointB" ref="pointB"/>
+		<constructor-arg name="pointC" ref="pointC"/>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="shapevalue.properties" />
+	</bean>
+	
+</beans>

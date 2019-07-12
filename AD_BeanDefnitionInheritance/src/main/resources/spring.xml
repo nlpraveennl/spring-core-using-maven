@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<bean id="pointXatZero" class="com.pvn.di.setterbased.Point" scope="prototype" abstract="true">
+		<property name="pointX" value="0"/>
+	</bean>
+	
+	<bean id="pointA" class="com.pvn.di.setterbased.Point" scope="prototype" parent="pointXatZero">
+		<property name="pointY" value="${pointA.Y}"/>
+	</bean>
+	
+	<bean id="pointB" class="com.pvn.di.setterbased.Point" scope="prototype" parent="pointXatZero">
+		<property name="pointY" value="${pointB.Y}"/>
+	</bean>
+	
+	<bean id="pointC" class="com.pvn.di.setterbased.Point" scope="prototype" parent="pointXatZero">
+		<property name="pointY" value="${pointC.Y}"/>
+	</bean>
+	
+	<bean id="parentTriangle" class="com.pvn.di.setterbased.Triangle" abstract="true">
+		<property name="points">
+			<list>
+				<ref bean="pointA"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="triangle" class="com.pvn.di.setterbased.Triangle" parent="parentTriangle">
+		<property name="points">
+			<list merge="true">
+				<ref bean="pointB"/>
+				<ref bean="pointC"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="shapevalue.properties" />
+	</bean>
+	
+</beans>
