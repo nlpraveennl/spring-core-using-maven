@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="ALL_ROLLING_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs\project.%d{yyyy-MM-dd_HH}.%i.log.zip
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy MM dd HH:mm:ss:SSS} [%-5thread] %-5level{5} - %msg %n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="ALL_ROLLING_FILE" />
+		<queueSize>1000000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+	</appender>
+
+	<root level="error">
+		<appender-ref ref="ASYNC" />
+	</root> 
+	
+	<logger name="java.sql.PreparedStatement" level="TRACE" additivity="false">
+		<appender-ref ref="ASYNC" />
+	</logger>
+	
+	<logger name="org.springframework" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC" />
+	</logger>
+
+	<logger name="com.pvn" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC" />
+	</logger>
+	
+	<!-- To print hibernate queries in logs -->
+	<!-- <logger name="org.hibernate.SQL" level="trace" additivity="false">
+	    <appender-ref ref="ASYNC" />
+	</logger> -->
+	
+	<!-- To get bind variables as well -->
+	<!-- <logger name="org.hibernate.type.descriptor.sql" level="trace">
+	    <appender-ref ref="ASYNC" />
+	</logger> -->
+</configuration>
